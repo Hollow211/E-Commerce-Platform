@@ -8,6 +8,6 @@ namespace Domain.Shared
 {
     public abstract class Entity<Tid>
     {
-        public Tid? id { get; set; }
+        public Tid? Id { get; set; }
     }
 }

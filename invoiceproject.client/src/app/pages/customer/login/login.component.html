@@ -1,0 +1,18 @@
+<div class="flex items-center justify-center h-full w-full">
+    <div class="h-105 w-100 bg-primary-darker shadow-[0px_0px_40px_-9px_rgb(230,230,235,0.05)]
+                p-7 rounded-3xl border-t-2 border-primary
+                flex flex-col items-center justify-start">
+        <p class="text-amber-100 font-Roboto font-bold text-2xl">Welcome back</p>
+        <div class="">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <label for="email">Email</label>
+                <input id="email" type="email" formControlName="email">
+
+                <label for="password">Password</label>
+                <input id="password" type="password" formControlName="password">
+
+                <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

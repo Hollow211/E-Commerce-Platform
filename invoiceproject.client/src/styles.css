@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+    --color-primary-darkest: #0D1321;   /* Deep navy */
+    --color-primary-darker:  #1D2D44;   /* Rich ocean blue */
+    --color-primary:         #3E5C76;   /* Desaturated marine */
+    --color-secondary:       #748CAB;   /* Soft denim blue */
+    --color-accent:          #F0EBD8;   /* Light sand / contrast */
+  
+    --color-text-primary:    #F0EBD8;   /* Bright text on dark */
+    --color-text-muted:      #9ca8ba;   /* Muted cool text */
+
+    --font-Roboto: Roboto;
+}
+
+:root {
+    --color-primary-darkest: #0D1321;   /* Deep navy */
+    --color-primary-darker:  #1D2D44;   /* Rich ocean blue */
+    --color-primary:         #3E5C76;   /* Desaturated marine */
+    --color-secondary:       #748CAB;   /* Soft denim blue */
+    --color-accent:          #F0EBD8;   /* Light sand / contrast */
+  
+    --color-text-primary:    #F0EBD8;   /* Bright text on dark */
+    --color-text-muted:      #9ca8ba;   /* Muted cool text */
+}
+
+html, body{
+    margin : 0px;
+    padding: 0px;
+    
+    height: 100vh;
+    width: 100vw;
+
+    background-color: var(--color-primary-darkest);
+}
+
+th, tr {
+    text-align: left;
+}
+
+
+/* Make app-root fill body */
+app-root {
+    display: block;
+    height: 100%;
+    width: 100%;
+}

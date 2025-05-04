@@ -36,10 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="CQRS\Commands\Responses\" />
-    <Folder Include="CQRS\Queries\Responses\" />
-    <Folder Include="CQRS\Queries\Requests\" />
   </ItemGroup>
 
 </Project>

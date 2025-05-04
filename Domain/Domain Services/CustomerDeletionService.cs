@@ -30,7 +30,7 @@ namespace Domain.Domain_Services
             if (customer == null)
                 throw new Exception("Customer not found");
 
-            if (customer.Invoices.Any(inv => inv.Due))
+            if (customer.Invoices.Any(inv => inv.isPaid))
                 return false;
             return true;
         }

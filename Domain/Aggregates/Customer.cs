@@ -7,19 +7,19 @@ namespace Domain.AggregateNodes;
 
 public class Customer : Entity<int>
 {
-    public string CustomerName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string CustomerEmail { get; set; } = null!;
+    public string Email { get; set; } = null!;
 
-    public string CustomerAddress { get; set; } = null!;
+    public string Address { get; set; } = null!;
 
-    public string CustomerPhoneNumber { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     public bool CanDeleteCustomer(int customerId)
     {
-        bool isThereDue = Invoices.Any(inv => inv.Due);
-        return !isThereDue;
+        bool isThereUnPaid = Invoices.Any(inv => !inv.isPaid);
+        return !isThereUnPaid;
     }
 }

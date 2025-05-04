@@ -1,4 +1,5 @@
 ﻿using Domain.AggregateNodes;
+using Domain.Aggregates.InvoiceAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,11 @@ namespace Domain.Shared.Interfaces
         Task AddCustomer(Customer customer);
 
         Task DeleteCustomer(Customer customer);
+
+        Task UpdateCustomer(Customer customer);
+
+        Task<List<Invoice>> GetCustomerInvoices(int id);
+
+        Task SaveChanges();
     }
 }

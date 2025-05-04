@@ -1,5 +1,7 @@
-using Infrastrcture.DatabaseContexts;
+
+using Domain.Shared.Interfaces;
 using Infrastrcture.Repositories;
+using Infrastructure.DatabaseContexts;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Infrastrcture
 builder.Services.AddScoped<ApplicationDbContext>();
-builder.Services.AddScoped<CustomerRepository>();
+builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
 
 // Application
 builder.Services.AddControllers();
-builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

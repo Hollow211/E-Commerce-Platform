@@ -2,16 +2,16 @@
 using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.Commands
+namespace Application.CQRS.Handlers.CommandHandlers.Customer
 {
-    public class DeleteCustomerHandler : IRequestHandler<DeleteCustomerRequest, bool>
+    public class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
         private readonly ICustomerRepository _customerRepository;
         public DeleteCustomerHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }
-        public async Task<bool> Handle(DeleteCustomerRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             // Validate the request
             if (request.id <= 0)
@@ -22,7 +22,7 @@ namespace Application.CQRS.Handlers.Commands
             if (customer == null)
                 return false;
 
-            if (customer.CanDeleteCustomer(customer.id))
+            if (customer.CanDeleteCustomer(customer.Id))
                 return false;
 
             await _customerRepository.DeleteCustomer(customer);

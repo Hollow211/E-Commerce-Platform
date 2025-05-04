@@ -1,9 +1,10 @@
 ﻿using Domain.AggregateNodes;
-using Infrastrcture.DatabaseContexts;
 using Domain.Shared.Interfaces;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Domain.Shared;
+using Infrastructure.DatabaseContexts;
+using Domain.Aggregates.InvoiceAggregate;
 
 namespace Infrastrcture.Repositories
 {
@@ -30,14 +31,26 @@ namespace Infrastrcture.Repositories
         {
             return await _context.Customers
                         .Include(c => c.Invoices)
-                        .FirstOrDefaultAsync(c => c.CustomerEmail == email);
+                        .FirstOrDefaultAsync(c => c.Email == email);
         }
 
         public async Task<Customer?> GetById(int id)
         {
             return await _context.Customers
-                        .Include(c => c.Invoices)
-                        .FirstOrDefaultAsync(c => c.id == id);
+                        .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public Task UpdateCustomer(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            return Task.CompletedTask;
+        }
+
+        public async Task SaveChanges() => await _context.SaveChangesAsync();
+
+        public async Task<List<Invoice>> GetCustomerInvoices(int id)
+        {
+            return await _context.Invoices.Where(x => x.CustomerId == id).ToListAsync();
         }
     }
 }

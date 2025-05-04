@@ -1,16 +1,15 @@
 ﻿using Domain.Aggregates.InvoiceAggregate;
+using Domain.Shared;
 using System;
 using System.Collections.Generic;
 
 namespace Domain.AggregateNodes;
 
-public class Product
+public class Product: Entity<int>
 {
-    public int ProductId { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string ProductName { get; set; } = null!;
+    public decimal Price { get; set; }
 
-    public decimal ProductPrice { get; set; }
-
-    public virtual ICollection<InvoiceItem> InvoiceProducts { get; set; } = new List<InvoiceItem>();
+    public virtual ICollection<InvoiceItem> InvoiceItems { get; set; } = new List<InvoiceItem>();
 }
