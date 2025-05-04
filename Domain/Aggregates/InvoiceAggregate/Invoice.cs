@@ -5,8 +5,6 @@ namespace Domain.Aggregates.InvoiceAggregate;
 public class Invoice : Entity<int>
 {
 
-    public int InvoiceNumber { get; set; }
-
     public int CustomerId { get; set; }
 
     public DateTime IssueDate { get; set; }

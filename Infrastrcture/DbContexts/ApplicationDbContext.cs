@@ -60,18 +60,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceId");
             entity.Property(e => e.ProductId).HasColumnName("ProductId");
-
-            entity.HasOne(d => d.Invoice)
-                .WithMany(p => p.Items)
-                .HasForeignKey(d => d.InvoiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_InvoiceItem_Invoice");
-
-            entity.HasOne(d => d.Product)
-                .WithMany(p => p.InvoiceItems)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_InvoiceItem_Product");
+            entity.Property(e => e.Quantity).HasColumnName("Quantity");
         });
 
         modelBuilder.Entity<Product>(entity =>

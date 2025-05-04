@@ -6,6 +6,6 @@ import { OverviewComponent } from '../pages/Invoices/overview/overview.component
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent},
-    {path: 'overview', component: OverviewComponent},
+    {path: 'overview/:id', component: OverviewComponent},
     {path: '' , component: AppComponent},
 ];

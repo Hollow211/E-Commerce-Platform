@@ -50,7 +50,17 @@ namespace Infrastrcture.Repositories
 
         public async Task<List<Invoice>> GetCustomerInvoices(int id)
         {
-            return await _context.Invoices.Where(x => x.CustomerId == id).ToListAsync();
+            /*var query = from i in _context.Invoices
+                        join pi in _context.InvoiceItem on i.Id equals pi.InvoiceId
+                        where i.CustomerId == id
+                        select new
+                        {
+
+                        }
+                        */
+            return await _context.Invoices.Include(x => x.Items).ThenInclude(x => x.Product)
+                        .Where(x => x.CustomerId == id)
+                        .ToListAsync();
         }
     }
 }

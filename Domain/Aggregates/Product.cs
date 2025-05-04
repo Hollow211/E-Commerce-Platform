@@ -10,6 +10,4 @@ public class Product: Entity<int>
     public string Name { get; set; } = null!;
 
     public decimal Price { get; set; }
-
-    public virtual ICollection<InvoiceItem> InvoiceItems { get; set; } = new List<InvoiceItem>();
 }
