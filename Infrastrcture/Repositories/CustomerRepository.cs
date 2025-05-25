@@ -11,10 +11,7 @@ namespace Infrastrcture.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly ApplicationDbContext _context;
-        public CustomerRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public CustomerRepository(ApplicationDbContext context) => _context = context;
 
         public async Task AddCustomer(Customer customer)
         {
@@ -50,14 +47,6 @@ namespace Infrastrcture.Repositories
 
         public async Task<List<Invoice>> GetCustomerInvoices(int id)
         {
-            /*var query = from i in _context.Invoices
-                        join pi in _context.InvoiceItem on i.Id equals pi.InvoiceId
-                        where i.CustomerId == id
-                        select new
-                        {
-
-                        }
-                        */
             return await _context.Invoices.Include(x => x.Items).ThenInclude(x => x.Product)
                         .Where(x => x.CustomerId == id)
                         .ToListAsync();

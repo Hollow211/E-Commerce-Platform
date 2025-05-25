@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.AggregateNodes;
 using Domain.Aggregates.InvoiceAggregate;
+using Domain.Aggregates.ProductAggregate;
+using Domain.Aggregates;
+using Domain.Aggregates.ProductUnitAggregate;
 
 namespace Infrastructure.DatabaseContexts;
 
@@ -16,6 +19,8 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Invoice> Invoices { get; set; }
     public virtual DbSet<InvoiceItem> InvoiceItem { get; set; }
     public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<ProductUnit> ProductUnits { get; set; }
+    public virtual DbSet<Unit> Units { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=tt;Integrated Security=True;");
@@ -42,7 +47,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("InvoiceId");
             entity.Property(e => e.IssueDate).HasColumnType("datetime");
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(19, 4)");
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(19, 2)");
             entity.Property(e => e.isPaid).HasColumnType("bit");
 
             entity.HasOne(d => d.Customer)
@@ -61,15 +66,39 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceId");
             entity.Property(e => e.ProductId).HasColumnName("ProductId");
             entity.Property(e => e.Quantity).HasColumnName("Quantity");
+            entity.Property(e => e.unitPrice).HasColumnName("unitPrice").HasColumnType("decimal(19, 2)");
+            entity.Property(entity => entity.unitType).HasColumnName("unitType").HasConversion<int>();
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
+            entity.ToTable("Product");
+
             entity.HasKey(e => e.Id).HasName("PK_Product");
 
-            entity.Property(e => e.Id).HasColumnName("ProductId");
+            entity.Property(e => e.Id).HasColumnName("Id").ValueGeneratedOnAdd();
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
+        });
+
+        modelBuilder.Entity<Unit>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Unit");
+
+            entity.ToTable("Unit");
+
+            entity.Property(e => e.Id).HasColumnName("Id");
+            entity.Property(e => e.Type).HasColumnName("Type").HasConversion<int>();
+        });
+
+        modelBuilder.Entity<ProductUnit>(entity =>
+        {
+            entity.HasKey(e => new { e.ProductId, e.UnitId }).HasName("PK_ProductUnit");
+
+            entity.ToTable("ProductUnit");
+
+            entity.Property(e => e.ProductId).HasColumnName("ProductId");
+            entity.Property(e => e.UnitId).HasColumnName("UnitId");
+            entity.Property(e => e.UnitPrice).HasColumnName("UnitPrice").HasColumnType("decimal(19, 2)");
         });
 
         OnModelCreatingPartial(modelBuilder);

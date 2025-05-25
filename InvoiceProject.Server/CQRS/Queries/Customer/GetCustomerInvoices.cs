@@ -1,8 +1,7 @@
-﻿using Application.CQRS.Queries.Responses;
-using Domain.Aggregates.InvoiceAggregate;
+﻿using Domain.Aggregates.InvoiceAggregate;
 using MediatR;
 
-namespace Application.CQRS.Queries.Requests
+namespace Application.CQRS.Queries.Customer
 {
     public record GetCustomerInvoices: IRequest<GetCustomerInvoicesResponse>
     {

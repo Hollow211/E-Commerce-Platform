@@ -1,9 +1,8 @@
-﻿using Application.CQRS.Queries.Requests;
-using Application.CQRS.Queries.Responses;
+﻿using Application.CQRS.Queries.Customer;
 using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.QueryHandlers
+namespace Application.CQRS.Handlers.QueryHandlers.Customer
 {
     public class GetCustomerInvoicesHandler : IRequestHandler<GetCustomerInvoices, GetCustomerInvoicesResponse>
     {

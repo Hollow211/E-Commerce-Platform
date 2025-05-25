@@ -1,0 +1,58 @@
+
+<div #MainDiv class="h-full w-full p-8">
+    <div class="flex flex-col gap-4 h-full w-full bg-primary-darker rounded-3xl py-5 px-8
+    shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
+        <div class="flex flex-row justify-between items-center">
+            <p class="font-bold font-Roboto text-4xl text-text-primary">Create Invoice</p>
+            <a [routerLink]="['/overview', getCurrentId()]">Go to Overview</a>
+        </div>
+        <div class="flex flex-row gap-4 bg-blue-900 w-full h-full p-6 rounded-3xl self-center justify-evenly
+                    items-center">
+            @for(item of AvailableProducts; track item){
+                <div class="rounded-2xl bg-green-400 w-full h-full p-2
+                                    shadow-[0px_-2px_6px_7px_rgba(0,_0,_0,_0.3)] items-center justify-center flex flex-col gap-2 ">
+                    <p class="font-Roboto text-amber-900 font-extrabold text-3xl">{{ item.name }}</p>
+                    <div class="flex flex-row gap-3 justify-center items-center">
+                        <div (click)="PickProduct(item,false)" class="flex flex-col gap-2 items-center p-2 bg-amber-200
+                            border-1 hover:border-2 hover:border-amber-50 cursor-pointer select-none">
+                            <p class="font-Roboto text-cyan-800 font-extrabold text-3xl">Unit</p>
+                            <p class="font-Roboto text-cyan-600 font-extrabold text-3xl">{{item.unitPrice}}$</p>
+                        </div>
+                        <div (click)="PickProduct(item,true)" class="flex flex-col gap-2 items-center p-2 bg-amber-200
+                            border-1 hover:border-2 hover:border-amber-50 cursor-pointer select-none">
+                            <p class="font-Roboto text-cyan-800 font-extrabold text-3xl">Package</p>
+                            <p class="font-Roboto text-cyan-800 font-extrabold text-2xl">(x{{item.unitsPerPackage}})</p>
+                            <p class="font-Roboto text-cyan-600 font-extrabold text-3xl">{{ item.packagePrice }}$</p>
+                        </div>
+                    </div>   
+                </div>
+            }
+        </div>
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row gap-3 items-center">
+                <p class="font-bold font-Roboto text-2xl text-text-primary">Basket:</p>
+                <div class="">
+                    <p class="font-Roboto text-green-500">Product: </p>
+                    <p class="font-Roboto text-green-500">Quantity: </p>
+                    <p class="font-Roboto text-green-500">Type: </p>
+                </div>   
+                @for(item of Basket;track item) {
+                    <div id="productDiv" class="flex flex-col items-center justify-center">
+                        <p class="font-Roboto text-white">{{item.name}}</p>
+                        <p class="font-Roboto text-blue-200">x{{item.quantity}}</p>
+                        <p class="font-Roboto text-blue-200">@if(item.isPackage) { Package } @else { Unit }</p>
+                    </div>
+                }
+                <button class="bg-amber-100 p-2 cursor-pointer" (click)="ClearBasket()">Clear</button>
+            </div>
+            <p class="font-bold font-Roboto text-2xl text-text-primary">Total Amount: <span class="text-amber-400">{{CalculateBasket()}}</span><span class="text-green-700">$</span></p>
+        </div>
+        <div class="self-center justify-center items-center flex flex-col mt-5">
+            <button [disabled]="Basket.length <= 0" (click)="onSubmit()"
+                    class="bg-green-500 p-3 w-50 text-2xl text-accent font-Roboto font-bold cursor-pointer
+                            disabled:bg-red-500 disabled:cursor-not-allowed rounded-2xl shadow-3xl">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>

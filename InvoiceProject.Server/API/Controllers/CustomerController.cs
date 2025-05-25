@@ -1,4 +1,5 @@
-﻿using Application.CQRS.Queries.Requests;
+﻿using Application.CQRS.Commands.Requests;
+using Application.CQRS.Queries.Customer;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -23,6 +24,18 @@ namespace Application.API.Controllers
         public async Task<IActionResult> GetCustomerDetail(int id)
         {
             var result = await _mediator.Send(new GetCustomerByIdQuery { id = id });
+            return Ok(result);
+        }
+        [HttpPost("create")]
+        public async Task<IActionResult> GetCustomerDetail(CreateCustomerCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        [HttpPost("updateName")]
+        public async Task<IActionResult> GetCustomerDetail(UpdateCustomerNameCommand request)
+        {
+            var result = await _mediator.Send(request);
             return Ok(result);
         }
         [HttpGet]

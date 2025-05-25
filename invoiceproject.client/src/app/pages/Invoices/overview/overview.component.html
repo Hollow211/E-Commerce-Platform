@@ -1,11 +1,18 @@
 <div #MainDiv class="h-full w-full p-8">
     <div class="flex flex-col gap-4 h-full w-full bg-primary-darker rounded-3xl py-5 px-8
     shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
-        <p class="font-bold font-Roboto text-4xl text-text-primary">Invoices</p>
+        <div class="flex flex-row justify-between items-center">
+            <p class="font-bold font-Roboto text-4xl text-text-primary">Invoices</p>
+            <div (click)="toggleFilter()" class="flex justify-center items-center bg-gray-200 gap-2 py-2 px-4 rounded-sm hover:cursor-pointer">
+                <p class="font-bold font-Roboto text-2xl text-amber-950">Filter</p>
+                <img class="h-3 w-3" src="assets/down-arrow.png">
+                <ng-template #filterContainer></ng-template>
+            </div>
+        </div>
         <!-- Table responsive wrapper -->
         <div class="overflow-x-auto bg-gray-300 rounded-sm">
             <!-- Table -->
-            <table class="min-w-full text-left text-md whitespace-nowrap">
+            <table class="min-w-full text-left text-md whitespace-nowrap overflow-hidden">
                 <!-- Table head -->
                 <thead class="uppercase tracking-wider font-Roboto font-extrabold border-b-1 border-gray-400">
                     <tr>
@@ -24,23 +31,28 @@
                     </tr>
                 </thead>
                 <!-- Table body -->
-                <tbody *ngIf="Invoices && Invoices.length > 0" class="text-gray-650 border-b-1 border-gray-400">
-                    @for (item of Invoices; track $index) {
+                <tbody *ngIf="ShownInvoices() != null && ShownInvoices()!.length > 0" id="invoicesRows" class="text-gray-650 border-b-1 border-gray-400">
+                    @for (item of ShownInvoices(); track item.id) {
                         <tr (click)="onSubmit($index)" class="border-b-1 border-gray-400 hover:bg-amber-50 cursor-pointer">
                             <th scope="row" class="px-6 py-2 ">
                                 {{item.id}}
                             </th>
                             <td class="px-6 py-2">{{item.totalAmount}}</td>
                             <td class="px-6 py-2">{{item.issueDate}}</td>
-                            <td class="px-6 py-2">@if (item.isPaid) {Paid} @else {Pending}</td>
+                            @if (item.isPaid) {
+                                <td class="px-6 py-2 font-Roboto font-bold text-green-800">Paid</td>
+                            } @else {
+                                <td class="px-6 py-2 font-Roboto font-bold text-red-800">Pending</td>
+                            }
+                            
                         </tr>
                     }
                 </tbody>
             </table>
             
         </div>
-        <p class="self-center text-2xl text-text-primary font-Roboto italic font-semibold" *ngIf="!Invoices">Currently fetching your invoices.</p>
-        <p class="self-center text-2xl text-text-muted font-Roboto font-semibold" *ngIf="Invoices && Invoices.length == 0">You don't have any invoices.</p>
+        <p class="self-center text-2xl text-text-primary font-Roboto italic font-semibold" *ngIf="!ShownInvoices()">Currently fetching your invoices.</p>
+        <p class="self-center text-2xl text-text-muted font-Roboto font-semibold" *ngIf="ShownInvoices() && ShownInvoices()!.length == 0">You don't have any invoices.</p>
     </div>
     <ng-template #invoiceContainer></ng-template>
 </div>

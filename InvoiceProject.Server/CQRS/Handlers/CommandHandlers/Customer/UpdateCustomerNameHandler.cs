@@ -2,7 +2,7 @@
 using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.CommandHandlers.Customer
+namespace Application.CQRS.Handlers.CommandHandlers
 {
     public class UpdateCustomerNameHandler : IRequestHandler<UpdateCustomerNameCommand, bool>
     {

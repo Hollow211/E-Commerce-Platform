@@ -1,0 +1,17 @@
+<div class="absolute right-17 top-27 z-10 h-80 w-90 bg-gray-200 rounded-2xl border-3 border-blue-400
+            flex flex-col gap-2 p-5 shadow-[-19px_9px_34px_0px_rgba(0,_0,_0,_0.1)]">
+    <div class="flex flex-row justify-between items-center">
+        <label class="font-Roboto text-gray-500" for="fromTime">From</label>
+        <input (change)="fromDateChanged()" [(ngModel)]="fromDate" type="date" id="fromTime">
+    </div>
+    <hr class="border-gray-300">
+    <div class="flex flex-row justify-between items-center">
+        <label class="font-Roboto text-gray-500" for="toTime">To</label>
+        <input (change)="fromDateChanged()" type="date" [(ngModel)]="toDate" id="toTime">
+    </div>
+    <hr class="border-gray-300">
+    <div class="flex flex-row justify-center gap-4 items-center">
+        <button (click)="onPaidClick()" class="bg-green-800 rounded-sm px-3 py-1 text-md text-text-primary hover:cursor-pointer hover:bg-green-700">Paid</button>
+        <button (click)="onPendingClick()" class="bg-red-800 rounded-sm px-3 py-1 text-md text-text-primary hover:cursor-pointer hover:bg-red-700">Pending</button>
+    </div>
+</div>

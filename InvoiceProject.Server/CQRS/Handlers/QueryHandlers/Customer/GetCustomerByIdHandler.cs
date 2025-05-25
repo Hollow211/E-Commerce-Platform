@@ -1,10 +1,10 @@
-﻿using Application.CQRS.Queries.Requests;
-using Application.CQRS.Queries.Responses;
+﻿using Application.CQRS.Queries.Customer;
+using Application.CQRS.Queries.GetCustomerResponseNameSpace;
 using Domain.AggregateNodes;
 using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.Queries
+namespace Application.CQRS.Handlers.QueryHandlers.Customer
 {
     public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, GetCustomerResponse>
     {

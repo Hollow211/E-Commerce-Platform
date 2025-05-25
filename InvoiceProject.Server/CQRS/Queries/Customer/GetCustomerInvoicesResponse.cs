@@ -1,7 +1,7 @@
 ﻿using Domain.AggregateNodes;
 using Domain.Aggregates.InvoiceAggregate;
 
-namespace Application.CQRS.Queries.Responses
+namespace Application.CQRS.Queries.Customer
 {
     public record GetCustomerInvoicesResponse
     {

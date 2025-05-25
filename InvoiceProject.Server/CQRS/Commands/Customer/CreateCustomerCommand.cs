@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Application.CQRS.Commands.Customer;
+using MediatR;
 
 namespace Application.CQRS.Commands.Requests
 {
-    public record CreateCustomerCommand : IRequest<bool>
+    public record CreateCustomerCommand : IRequest<CreateCustomerResponse>
     {
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;

@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Infrastrcture
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 
 // Application
 builder.Services.AddControllers();

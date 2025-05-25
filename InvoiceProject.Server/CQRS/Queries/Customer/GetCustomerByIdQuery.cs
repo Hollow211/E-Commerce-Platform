@@ -1,8 +1,8 @@
-﻿using Application.CQRS.Queries.Responses;
+﻿using Application.CQRS.Queries.GetCustomerResponseNameSpace;
 using Domain.AggregateNodes;
 using MediatR;
 
-namespace Application.CQRS.Queries.Requests
+namespace Application.CQRS.Queries.Customer
 {
     public record GetCustomerByIdQuery : IRequest<GetCustomerResponse>
     {

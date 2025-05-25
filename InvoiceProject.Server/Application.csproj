@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentResults" Version="3.16.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
@@ -36,7 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Commands\Responses\" />
+    <Folder Include="CQRS\Handlers\CommandHandlers\Invoice\" />
+    <Folder Include="CQRS\Handlers\QueryHandlers\Invoice\" />
+    <Folder Include="CQRS\Queries\Invoice\" />
   </ItemGroup>
 
 </Project>
