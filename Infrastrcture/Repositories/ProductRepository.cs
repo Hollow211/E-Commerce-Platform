@@ -1,4 +1,5 @@
-﻿using Domain.Aggregates.ProductAggregate;
+﻿using Domain.Aggregates;
+using Domain.Aggregates.ProductAggregate;
 using Domain.Shared.Interfaces;
 using Infrastructure.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,26 @@ namespace Infrastrcture.Repositories
     {
         private readonly ApplicationDbContext _context;
         public ProductRepository(ApplicationDbContext context) => _context = context;
-        public async Task<Product?> GetById(int id) => await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-
-        public async Task<ICollection<Product>> GetAllProducts() => await _context.Products.ToListAsync();
-
-        public async Task CreateProduct(Product product)
+        public async Task<Product?> GetById(int id)
         {
-            await _context.Products.AddAsync(product);
-            //await _context.ProductUnits.AddRangeAsync(product.Units);
+            return await _context.Products.Include(x => x.Units).ThenInclude(x => x.Unit).FirstOrDefaultAsync(x => x.Id == id);
+        }
+        public async Task<List<Product>> GetAllProducts()
+        {
+            return await _context.Products.Include(x => x.Units).ThenInclude(x => x.Unit).ToListAsync();
         }
 
-        public async Task SaveChanges()
+        public async Task CreateProduct(Product product) => await _context.Products.AddAsync(product);
+
+        public async Task SaveChanges() => await _context.SaveChangesAsync();
+
+        public async Task<List<Product>> GetProductsFromIds(List<int> ids)
         {
-            await _context.SaveChangesAsync();
+            return await _context.Products.Include(x => x.Units).
+                ThenInclude(x => x.Unit).
+                Where(p => ids.Contains(p.Id)).
+                Distinct().
+                ToListAsync();
         }
     }
 }

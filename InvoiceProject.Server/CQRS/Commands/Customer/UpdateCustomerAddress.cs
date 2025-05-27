@@ -1,10 +1,16 @@
-﻿using Application.CQRS.Commands.Requests;
-using Domain.Shared.Interfaces;
+﻿using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.CommandHandlers
+namespace Application.CQRS.Commands.CustomerCommands
 {
-    public class UpdateCustomerAdressHandler : IRequestHandler<UpdateCustomerAdressCommand, bool>
+    public record UpdateCustomerAddress : IRequest<bool>
+    {
+        public required int id { get; set; }
+
+        public required string address { get; set; }
+    }
+
+    public class UpdateCustomerAdressHandler : IRequestHandler<UpdateCustomerAddress, bool>
     {
         private readonly ICustomerRepository _customerRepository;
 
@@ -13,7 +19,7 @@ namespace Application.CQRS.Handlers.CommandHandlers
             _customerRepository = customerRepository;
         }
 
-        public async Task<bool> Handle(UpdateCustomerAdressCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateCustomerAddress request, CancellationToken cancellationToken)
         {
             var customer = await _customerRepository.GetById(request.id);
 

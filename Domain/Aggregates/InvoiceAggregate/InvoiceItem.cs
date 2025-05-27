@@ -17,16 +17,14 @@ public class InvoiceItem
 
     public virtual Product Product { get; set; } = null!;
 
-    public static InvoiceItem CreateInvoiceItem(Invoice Invoice, Product Product, int Quantity, ProductUnit productUnit)
+    public static InvoiceItem CreateInvoiceItem(int productId, int Quantity, decimal unitPrice, UnitType unitType)
     {
-        if (Invoice.Id <= 0 || Product.Id <= 0 || Quantity <= 0)
-            throw new ArgumentException("Invalid input values for creating an invoice item.");
         return new InvoiceItem
         {
-            InvoiceId = Invoice.Id,
-            ProductId = Product.Id,
+            ProductId = productId,
             Quantity = Quantity,
-            unitPrice = productUnit.UnitPrice,
+            unitPrice = unitPrice,
+            unitType = unitType,
         };
     }
 }

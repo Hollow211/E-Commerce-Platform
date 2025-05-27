@@ -1,8 +1,8 @@
 ﻿using Application.DTOs;
 using Domain.Aggregates.ProductAggregate;
 using Domain.Aggregates.ProductUnitAggregate;
+using Domain.POCO;
 using Domain.Shared.Interfaces;
-using Domain.ValueObjects;
 using FluentResults;
 using MediatR;
 using System.Diagnostics;
@@ -32,7 +32,7 @@ namespace Application.CQRS.Commands.ProductCommands
         }
         public async Task<CreateProductResponse> Handle(CreateProduct request, CancellationToken cancellationToken)
         {
-            /*List<UnitPrice> unitPrices = new List<UnitPrice>();
+            List<UnitPrice> unitPrices = new List<UnitPrice>();
             foreach (var entry in request.unitPriceDTO)
             {
                 Debug.WriteLine(entry.unitId);
@@ -51,15 +51,7 @@ namespace Application.CQRS.Commands.ProductCommands
                 await _productRepository.CreateProduct(result.Value);
                 await _productRepository.SaveChanges();
                 return new CreateProductResponse { IsSuccess = true, Id = result.Value.Id };
-            }*/
-
-            await _productRepository.CreateProduct(new Product
-            {
-                Name = request.name,
-                Units = new List<ProductUnit>(),
-            });
-            await _productRepository.SaveChanges();
-            return new CreateProductResponse { IsSuccess = true, Id = 2 };
+            }
         }
     }
 }

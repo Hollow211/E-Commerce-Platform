@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, output } from '@angular/core';
 import { DataService } from '../../../services/data-service/data.service';
 import { animate, Timeline } from 'animejs';
+import { UnitType } from '../create-invoice/create-invoice.component';
 
 @Component({
   selector: 'app-invoice',
@@ -29,8 +30,8 @@ export class InvoiceComponent implements AfterViewInit {
       ease: 'inOut',
     },'-=50');
   }
-
-  @Input() invoice!: any;
+  UnitType = UnitType;
+  @Input() invoice!: {id: number,totalAmount: number, isPaid: boolean, issueDate: Date, items: {product: {name: string}, unitType: UnitType, quantity: number, unitPrice: number}[]};
   @Input() customer!: any;
 
   @Output() closeEvent = new EventEmitter<void>();

@@ -1,6 +1,6 @@
 ﻿using Domain.Aggregates;
 
-namespace Domain.ValueObjects
+namespace Domain.POCO
 {
     public record UnitPrice
     {

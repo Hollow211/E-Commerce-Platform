@@ -1,7 +1,7 @@
 ﻿using Domain.Aggregates.InvoiceAggregate;
 using Domain.Aggregates.ProductUnitAggregate;
+using Domain.POCO;
 using Domain.Shared;
-using Domain.ValueObjects;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -47,6 +47,11 @@ namespace Domain.Aggregates.ProductAggregate
             }
 
             return Result.Ok(product);
+        }
+
+        public void FilterUnits(List<int> unitIds)
+        {
+            Units = Units.Where(u => unitIds.Any(unit => unit == u.UnitId)).ToList();
         }
 
         private static bool isValid(string name, List<UnitPrice> units)

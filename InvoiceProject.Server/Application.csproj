@@ -36,10 +36,4 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQRS\Handlers\CommandHandlers\Invoice\" />
-    <Folder Include="CQRS\Handlers\QueryHandlers\Invoice\" />
-    <Folder Include="CQRS\Queries\Invoice\" />
-  </ItemGroup>
-
 </Project>

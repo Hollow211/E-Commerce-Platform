@@ -4,6 +4,7 @@ import { LoginComponent } from '../pages/customer/login/login.component';
 import { OverviewComponent } from '../pages/Invoices/overview/overview.component';
 import { CreateInvoiceComponent } from '../pages/Invoices/create-invoice/create-invoice.component';
 import { CreateCustomerComponent } from '../pages/customer/create-customer/create-customer.component';
+import { CreateProductComponent } from '../pages/Products/create-product/create-product.component';
 
 
 export const routes: Routes = [
@@ -11,5 +12,6 @@ export const routes: Routes = [
     {path: 'overview/:id', component: OverviewComponent},
     {path: 'create-invoice/:id', component: CreateInvoiceComponent},
     {path: 'create-customer',component: CreateCustomerComponent},
-    {path: '' , component: AppComponent},
+    {path: 'create-product',component: CreateProductComponent},
+    {path: '' , component: CreateCustomerComponent},
 ];

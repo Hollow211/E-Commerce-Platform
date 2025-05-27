@@ -3,18 +3,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../../../services/data-service/data.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from '@angular/router';
 import { animate } from 'animejs';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-create-invoice',
   templateUrl: './create-invoice.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink,NgOptimizedImage],
 })
 export class CreateInvoiceComponent implements OnInit {
   constructor(private data: DataService, private route: ActivatedRoute) {}
 
-  AvailableProducts: {id: number, name: string, quantity: number, unitPrice: number, unitsPerPackage: number, packagePrice: number}[] = [];
-  Basket: {id: number, name: string, quantity: number, unitPrice: number, isPackage: boolean}[] = [];
+  UnitType = UnitType;
+  AvailableProducts: Product[] = [];
+  Basket: {id: number, name: string, quantity: number, unitId: number, unitType: UnitType, unitPrice: number }[] = [];
 
   ngOnInit(): void {
     this.data.getAllProducts().subscribe({
@@ -24,18 +26,20 @@ export class CreateInvoiceComponent implements OnInit {
     })
   }
 
-  PickProduct(item: any, isPackage: boolean) {
-    var search = this.Basket.find(entry => entry.id == item.id && entry.isPackage == isPackage)
-    console.log(search);
+  PickProduct(item: Product, prodUnit: ProductUnit) {
+    var search = this.Basket.find(entry => entry.id == item.id && entry.unitId == prodUnit.unitId)
+
     if (search) {
       search.quantity += 1;
     } else {
       this.Basket.push({
-        quantity: 1, isPackage: isPackage, name: item.name,
         id: item.id,
-        unitPrice: isPackage? item.packagePrice : item.unitPrice
+        name: item.name,
+        quantity: 1,
+        unitId: prodUnit.unitId,
+        unitType: prodUnit.unit.type,
+        unitPrice: prodUnit.unitPrice
       });
-      console.log(this.Basket);
     }
   }
 
@@ -53,19 +57,23 @@ export class CreateInvoiceComponent implements OnInit {
 
   onSubmit() {
     if (this.Basket.length == 0)
-      alert("Basket is empty");
+      alert("Basket is empty"); // Shouldn't happen
 
     const customerId = this.route.snapshot.paramMap.get('id')!;
-    const products = this.Basket.map(item => ({
-      id: item.id,
-      quantity: item.quantity,
-      unitPrice: item.unitPrice,
-      isPackage: item.isPackage,
-    }));
+
+    // Get products
+    const products: {productId: number, unitId: number, quantity: number}[] = [];
+
+    this.Basket.forEach(item => {
+      products.push({
+        productId: item.id,
+        unitId: item.unitId,
+        quantity: item.quantity,
+      })
+    });
 
     const invoiceRequest = {
       customerId: parseInt(customerId),
-      TotalAmount: this.CalculateBasket(),
       products,
       InvoiceDate: new Date().toISOString()
     };
@@ -81,4 +89,28 @@ export class CreateInvoiceComponent implements OnInit {
   getCurrentId() {
     return this.route.snapshot.paramMap.get('id');
   }
+}
+
+export enum UnitType {
+  Single = 0,
+  Package = 1,
+  Bulk = 2
+}
+
+export class Unit {
+  id!: number;
+  type!: UnitType;
+}
+
+export class ProductUnit {
+  productId!: number;
+  unitId!: number;
+  unitPrice!: number;
+  unit!: Unit;
+}
+
+export class Product {
+  id!: number;
+  name!: string;
+  units!: ProductUnit[];
 }

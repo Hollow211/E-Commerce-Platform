@@ -9,8 +9,6 @@ export class InvoiceDataService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomerInvoices(id: number) {
-    return this.http.get(`${environment.backend}/api/customer/overview/${id}`)
-  }
+  
 
 }

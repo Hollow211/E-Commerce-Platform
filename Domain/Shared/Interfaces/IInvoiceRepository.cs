@@ -11,7 +11,7 @@ namespace Domain.Shared.Interfaces
     public interface IInvoiceRepository
     {
         Task<Invoice?> GetInvoiceByIdAsync(int id);
-        Task<IEnumerable<Invoice>> GetAllCustomerInvoices(Customer customer);
+        Task<List<Invoice>> GetInvoicesByCustomerId(int customerId);
         Task AddInvoiceAsync(Invoice invoice);
         Task UpdateInvoiceAsync(Invoice invoice);
         Task DeleteInvoiceAsync(Invoice invoice);

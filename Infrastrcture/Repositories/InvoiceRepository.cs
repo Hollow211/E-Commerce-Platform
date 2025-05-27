@@ -28,15 +28,6 @@ namespace Infrastrcture.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Invoice>> GetAllCustomerInvoices(Customer customer)
-        {
-            return await _context.Invoices
-                .Include(i => i.Items)
-                .ThenInclude(ii => ii.Product)
-                .Where(i => i.CustomerId == customer.Id)
-                .ToListAsync();
-        }
-
         public async Task<Invoice?> GetInvoiceByIdAsync(int id)
         {
             return await _context.Invoices
@@ -52,5 +43,14 @@ namespace Infrastrcture.Repositories
         }
 
         public async Task SaveChanges() => await _context.SaveChangesAsync();
+
+        public async Task<List<Invoice>> GetInvoicesByCustomerId(int customerId)
+        {
+            return await _context.Invoices
+                .Include(i => i.Items)
+                .ThenInclude(ii => ii.Product)
+                .Where(i => i.CustomerId == customerId)
+                .ToListAsync();
+        }
     }
 }

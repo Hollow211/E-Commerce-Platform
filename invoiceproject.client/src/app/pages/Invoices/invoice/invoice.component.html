@@ -12,35 +12,35 @@
                         <p class="text-text-primary text-sm font-semibold">Pending</p>
                     </div>
                 }
-                <p class="text-text-primary text-sm font-semibold">{{invoice.issueDate}}</p>
+                <p class="text-text-primary text-sm font-semibold">{{invoice.issueDate | date: 'yyyy-MM-dd'}}</p>
             </div>
         </div>
         <div class="border-b-2 border-gray-300/20 pb-2">
             <p class="text-2xl text-amber-100 font-Roboto font-bold">Summary</p>
         </div>
-        <div class="flex flex-row justify-between">
-            <div class="flex flex-col">
-                <div class="flex flex-row gap-5 justify-between">
-                    <p class="text-black/60 font-Roboto">Total amount:</p>
-                    <p class="font-Roboto text-white font-bold">{{invoice.totalAmount}}</p>
-                </div>
-                <div class="flex flex-row gap-5 justify-between">
-                    <p class="text-black/60 font-Roboto">Currency:</p>
-                    <p class="font-Roboto text-white font-bold">USD</p>
-                </div>
-            </div>
+        <div class="flex flex-row justify-between gap-10">
             <div class="flex flex-col justify-start">
                 <div class="flex flex-row gap-8 justify-between">
-                    <p class="text-black/60 font-Roboto">Name:</p>
-                    <p class="font-Roboto text-white font-semibold">{{customer.name}}</p>
+                    <p class="text-black/75 font-Roboto">Name:</p>
+                    <p class="font-Roboto text-white">{{customer.name}}</p>
                 </div>
                 <div class="flex flex-row gap-8 justify-between">
-                    <p class="text-black/60 font-Roboto">Email:</p>
-                    <p class="font-Roboto text-white font-semibold">{{customer.email}}</p>
+                    <p class="text-black/75 font-Roboto">Email:</p>
+                    <p class="font-Roboto text-white">{{customer.email}}</p>
                 </div>
                 <div class="flex flex-row gap-8 justify-between">
-                    <p class="text-black/60 font-Roboto">address:</p>
-                    <p class="font-Roboto text-white font-semibold">{{customer.address}}</p>
+                    <p class="text-black/75 font-Roboto">Address:</p>
+                    <p class="font-Roboto text-white">{{customer.address}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col w-full">
+                <div class="flex flex-row gap-5 justify-between">
+                    <p class="text-black/75 font-Roboto">Total amount:</p>
+                    <p class="font-Roboto text-white font-semibold">{{invoice.totalAmount}}</p>
+                </div>
+                <div class="flex flex-row gap-5 justify-between">
+                    <p class="text-black/75 font-Roboto">Currency:</p>
+                    <p class="font-Roboto text-white">$</p>
                 </div>
             </div>
         </div>
@@ -50,10 +50,13 @@
                 <thead class="uppercase tracking-wider font-Roboto font-extrabold border-b-1 border-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Product name
+                            Name
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Unit
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Quantity
@@ -67,7 +70,8 @@
                             <th scope="row" class="px-6 py-2 ">
                                 {{item.product.name}}
                             </th>
-                            <td class="px-6 py-2">{{item.product.price}}$</td>
+                            <td class="px-6 py-2 font-bold text-green-700">{{item.unitPrice}}$</td>
+                            <td class="px-6 py-2">{{UnitType[item.unitType]}}</td>
                             <td class="px-6 py-2">{{item.quantity}}</td>
                         </tr>
                     }

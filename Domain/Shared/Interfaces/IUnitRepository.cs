@@ -13,5 +13,9 @@ namespace Domain.Shared.Interfaces
         Task<Unit?> GetById(int id);
 
         Task<ICollection<Unit>> GetAllUnits();
+
+        Task<ICollection<Unit>> GetByIds(IEnumerable<int> ids);
+
+        Task<List<Unit>> GetUnitsFromIds(List<int> unitsIds);
     }
 }

@@ -3,11 +3,17 @@
     shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
         <div class="flex flex-row justify-between items-center">
             <p class="font-bold font-Roboto text-4xl text-text-primary">Invoices</p>
-            <div (click)="toggleFilter()" class="flex justify-center items-center bg-gray-200 gap-2 py-2 px-4 rounded-sm hover:cursor-pointer">
-                <p class="font-bold font-Roboto text-2xl text-amber-950">Filter</p>
-                <img class="h-3 w-3" src="assets/down-arrow.png">
-                <ng-template #filterContainer></ng-template>
+            <div class="flex flex-row gap-5">
+                <div class="p-3 box-border rounded-sm bg-amber-700">
+                    <a class="font-bold font-Roboto text-white" [routerLink]="['/create-invoice', getCurrentId()]">Create Invoice</a>
+                </div>
+                <div (click)="toggleFilter()" class="flex justify-center items-center bg-gray-200 gap-2 py-2 px-4 rounded-sm hover:cursor-pointer">
+                    <p class="font-bold font-Roboto text-2xl text-amber-950">Filter</p>
+                    <img class="h-3 w-3" src="assets/down-arrow.png">
+                    <ng-template #filterContainer></ng-template>
+                </div>
             </div>
+            
         </div>
         <!-- Table responsive wrapper -->
         <div class="overflow-x-auto bg-gray-300 rounded-sm">
@@ -37,8 +43,8 @@
                             <th scope="row" class="px-6 py-2 ">
                                 {{item.id}}
                             </th>
-                            <td class="px-6 py-2">{{item.totalAmount}}</td>
-                            <td class="px-6 py-2">{{item.issueDate}}</td>
+                            <td class="px-6 py-2 text-green-600 font-Roboto font-bold">{{item.totalAmount}}$</td>
+                            <td class="px-6 py-2">{{item.issueDate | date: 'yyyy-MM-dd'}}</td>
                             @if (item.isPaid) {
                                 <td class="px-6 py-2 font-Roboto font-bold text-green-800">Paid</td>
                             } @else {

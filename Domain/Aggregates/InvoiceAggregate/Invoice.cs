@@ -1,5 +1,6 @@
 ﻿using Domain.AggregateNodes;
 using Domain.Aggregates.ProductAggregate;
+using Domain.POCO;
 using Domain.Shared;
 using FluentResults;
 namespace Domain.Aggregates.InvoiceAggregate;
@@ -18,45 +19,38 @@ public class Invoice : Entity<int>
 
     public virtual ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
 
-    public static Result<Invoice> CreateInvoice(int customerId, DateTime issueDate, decimal totalAmount, List<Product> products)
+    public static Result<Invoice> CreateInvoice(Customer customer, 
+        DateTime issueDate,
+        List<SoldProductPOCO> soldPorductsPoco)
     {
         // Validation
-        if (CheckValidation(customerId, issueDate, totalAmount,products) == false)
-        {
+        if (CheckValidation(customer, issueDate, soldPorductsPoco) == false)
             return Result.Fail("Invalid or missing inputs");
-        }
 
-        // Create invoice id
-        var invoiceId = Random.Shared.Next(1, 1000);
+        // Create invoice
+        Invoice newInvoice = new Invoice();
 
         // Create invoice items
         var items = new List<InvoiceItem>();
-        /*foreach (var product in products)
+        foreach (var entry in soldPorductsPoco) // Loop on each product
         {
-            InvoiceItem item = InvoiceItem.CreateInvoiceItem(invoiceId, product.Key.Id, product.Value, false, product.); // Value is quantity
-            // TODO: Validation
-            items.Add(item);
-        }*/
+            var unitPrice = entry.Product.Units.FirstOrDefault(x => x.UnitId == entry.Unit.Id)!.UnitPrice;
+            InvoiceItem item = InvoiceItem.CreateInvoiceItem(entry.Product.Id, entry.Quantity, unitPrice, entry.Unit.Type);
+            newInvoice.TotalAmount += (unitPrice * entry.Quantity);
+            newInvoice.Items.Add(item);
+        }
 
         // Create invoice
-        Invoice newInvoice =  new Invoice
-        {
-            Id = invoiceId,
-            CustomerId = customerId,
-            IssueDate = issueDate,
-            TotalAmount = totalAmount,
-            isPaid = false,
-            Items = items,
-        };
+        newInvoice.IssueDate = issueDate;
+        newInvoice.CustomerId = customer.Id;
+        newInvoice.isPaid = false;
 
         return Result.Ok(newInvoice);
     }
 
-    private static bool CheckValidation(int customerId, DateTime issueDate, decimal totalAmount, List<Product> products)
+    private static bool CheckValidation(Customer customer, DateTime issueDate, List<SoldProductPOCO> products)
     {
-        if (customerId <= 0)
-            return false;
-        if (totalAmount <= 0)
+        if (customer == null)
             return false;
         if (products.Count == 0)
             return false;

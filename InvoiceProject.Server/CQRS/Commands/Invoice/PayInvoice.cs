@@ -1,13 +1,18 @@
 ﻿using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Commands.Invoice.Update
+namespace Application.CQRS.Commands.InvoiceCommands
 {
-    public class PayInvoiceHandler : IRequestHandler<PayInvoiceCommand, bool>
+    public record PayInvoice: IRequest<bool>
+    {
+        public required int id { get; set; }
+    }
+
+    public class PayInvoiceHandler : IRequestHandler<PayInvoice, bool>
     {
         private readonly IInvoiceRepository _invoiceRepository;
         public PayInvoiceHandler(IInvoiceRepository invoiceRepository) => _invoiceRepository = invoiceRepository;
-        public async Task<bool> Handle(PayInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(PayInvoice request, CancellationToken cancellationToken)
         {
             // Get Invoice
             var invoice = await _invoiceRepository.GetInvoiceByIdAsync(request.id);

@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Aggregates.ProductUnitAggregate
 {
-    public class ProductUnit: Entity<int>
+    public class ProductUnit
     {
         public required int ProductId { get; set; }
 
         public required int UnitId { get; set; }
 
         public required decimal UnitPrice { get; set; }
+
+        public virtual Unit Unit { get; set; }
 
         public static Result<ProductUnit> CreateProductUnit(int productId, int unitId, decimal unitPrice)
         {

@@ -1,17 +1,21 @@
-﻿using Application.CQRS.Commands.Requests;
-using Domain.Shared.Interfaces;
+﻿using Domain.Shared.Interfaces;
 using MediatR;
 
-namespace Application.CQRS.Handlers.CommandHandlers
+namespace Application.CQRS.Commands.CustomerCommands
 {
-    public class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, bool>
+    public record DeleteCustomer: IRequest<bool>
+    {
+        public int id { get; set; }
+    }
+
+    public class DeleteCustomerHandler : IRequestHandler<DeleteCustomer, bool>
     {
         private readonly ICustomerRepository _customerRepository;
         public DeleteCustomerHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }
-        public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCustomer request, CancellationToken cancellationToken)
         {
             // Validate the request
             if (request.id <= 0)

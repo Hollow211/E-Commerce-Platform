@@ -1,4 +1,5 @@
-﻿using Domain.Aggregates.ProductAggregate;
+﻿using Domain.Aggregates;
+using Domain.Aggregates.ProductAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,11 @@ namespace Domain.Shared.Interfaces
     {
         Task<Product?> GetById(int id);
 
-        Task<ICollection<Product>> GetAllProducts();
+        Task<List<Product>> GetAllProducts();
 
         Task CreateProduct(Product product);
+
+        Task<List<Product>> GetProductsFromIds(List<int> ids);
 
         Task SaveChanges();
     }

@@ -59,7 +59,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<InvoiceItem>(entity =>
         {
-            entity.HasKey(e => new { e.InvoiceId, e.ProductId }).HasName("PK_InvoiceItem");
+            entity.HasKey(e => new { e.InvoiceId, e.ProductId, e.unitType }).HasName("PK_InvoiceItem");
 
             entity.ToTable("InvoiceItem");
 
@@ -99,6 +99,10 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("ProductId");
             entity.Property(e => e.UnitId).HasColumnName("UnitId");
             entity.Property(e => e.UnitPrice).HasColumnName("UnitPrice").HasColumnType("decimal(19, 2)");
+
+            entity.HasOne(pu => pu.Unit)
+                  .WithMany()
+                  .HasForeignKey(pu => pu.UnitId);
         });
 
         OnModelCreatingPartial(modelBuilder);

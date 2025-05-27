@@ -1,0 +1,28 @@
+<div #MainDiv class="h-full w-full p-8">
+    <div class="flex flex-col gap-4 h-full w-full bg-primary-darker rounded-3xl py-5 px-8
+    shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
+        <div class="flex flex-row justify-between items-center">
+            <p class="font-bold font-Roboto text-4xl text-text-primary">Create a product</p>
+        </div>
+        <!-- create-product.component.html -->
+        <div class="self-center bg-amber-300 box-border p-5 w-8/12">
+            <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+                <div>
+                    <label for="name">Product Name</label>
+                    <input formControlName="name" id="name" class="border p-1 rounded w-full" />
+                </div>
+                <div formArrayName="unitPriceDTO">
+                    @for (alias of units.controls; track alias; let i = $index) {
+                        <div>
+                            <!-- The repeated alias template -->
+                            <label for="alias-{{ i }}">Alias:</label>
+                            <input id="alias-{{ i }}" type="text" [formControlName]="i" />
+                        </div>
+                    }
+                </div>
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded mt-4">Create Product</button>
+            </form>
+        </div>
+        
+    </div>
+</div>
