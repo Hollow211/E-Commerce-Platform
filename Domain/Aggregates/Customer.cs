@@ -23,8 +23,9 @@ public class Customer : Entity<int>
             return Result.Fail("Invalid or missing inputs");
         }
 
-        Customer newCustomer =  new Customer
+        Customer newCustomer = new Customer
         {
+            Id = Random.Shared.Next(0, 99999),
             Name = name,
             Email = email,
             Address = address,

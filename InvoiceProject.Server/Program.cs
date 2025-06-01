@@ -1,5 +1,6 @@
 
-using Domain.Shared.Interfaces;
+using Application;
+using Application.Interfaces;
 using Infrastrcture.Repositories;
 using Infrastructure.DatabaseContexts;
 using MediatR;
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Infrastrcture
 builder.Services.AddScoped<ApplicationDbContext>();
-builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
@@ -18,7 +19,7 @@ builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 // Application
 builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
-
+builder.Services.AddApplication();
 // CORS
 builder.Services.AddCors(options =>
 {

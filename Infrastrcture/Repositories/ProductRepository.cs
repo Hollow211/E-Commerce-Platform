@@ -1,6 +1,6 @@
 ﻿using Domain.Aggregates;
 using Domain.Aggregates.ProductAggregate;
-using Domain.Shared.Interfaces;
+using Application.Interfaces;
 using Infrastructure.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
 using System;

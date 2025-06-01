@@ -16,7 +16,7 @@ namespace Domain.Aggregates.ProductAggregate
         public required virtual ICollection<ProductUnit> Units { get; set; }
 
         public static Result<Product> CreateProduct(string name,
-                                                    List<UnitPrice> units)
+                                                    List<UnitPricePOCO> units)
         {
             // Validation
             if (!isValid(name, units))
@@ -54,7 +54,7 @@ namespace Domain.Aggregates.ProductAggregate
             Units = Units.Where(u => unitIds.Any(unit => unit == u.UnitId)).ToList();
         }
 
-        private static bool isValid(string name, List<UnitPrice> units)
+        private static bool isValid(string name, List<UnitPricePOCO> units)
         {
             // Add validation logic here
             if (string.IsNullOrWhiteSpace(name))

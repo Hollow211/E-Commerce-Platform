@@ -3,24 +3,59 @@
     shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
         <div class="flex flex-row justify-between items-center">
             <p class="font-bold font-Roboto text-4xl text-text-primary">Create a product</p>
+            <div class="p-3 box-border rounded-sm bg-amber-700">
+                <a class="font-bold font-Roboto text-white" [routerLink]="['/create-invoice', 1]">Create Invoice</a>
+            </div>
         </div>
         <!-- create-product.component.html -->
-        <div class="self-center bg-amber-300 box-border p-5 w-8/12">
+        <div class="self-center bg-white box-border p-5 w-md h-auto rounded-2xl border-2 border-blue-700">
             <form [formGroup]="productForm" (ngSubmit)="submitForm()">
                 <div>
-                    <label for="name">Product Name</label>
-                    <input formControlName="name" id="name" class="border p-1 rounded w-full" />
+                    <label class="text-gray-700 font-bold" for="name">Product Name</label>
+                    <input formControlName="name" id="name" class="border-b p-1 w-full outline-none placeholder:text-gray-400" placeholder="Name"/>
                 </div>
-                <div formArrayName="unitPriceDTO">
-                    @for (alias of units.controls; track alias; let i = $index) {
-                        <div>
-                            <!-- The repeated alias template -->
-                            <label for="alias-{{ i }}">Alias:</label>
-                            <input id="alias-{{ i }}" type="text" [formControlName]="i" />
-                        </div>
-                    }
+                <div formArrayName="unitPriceDTO" class="mt-4 space-y-2">
+                    <div
+                    *ngFor="let unitCtrl of units.controls; let i = index"
+                    [formGroupName]="i"
+                    class="flex gap-2 items-center justify-between"
+                    >
+                        <select formControlName="unitId" class="border-b p-1 w-38 outline-none h-full" placeholder="Select Unit">
+                            <option value="" disabled selected>Select Unit</option>
+                            <option
+                            *ngFor="let unit of Units"
+                            [value]="unit.id"
+                            >
+                            {{ UnitType[unit.type] }}
+                            </option>
+                        </select>
+
+                        <input
+                            formControlName="unitPrice"
+                            type="number"
+                            placeholder="Unit Price"
+                            class="border-b p-1 w-38 outline-none placeholder:text-gray-400 h-full"
+                        />
+
+                        <button
+                            type="button"
+                            (click)="removeUnit(i)"
+                            class="text-white hover:underline cursor-pointer rounded-sm font-bold h-full font-Roboto box-border p-1.5 bg-red-600"
+                        >
+                            Remove
+                        </button>
+                    </div>
+
+                    <button
+                    type="button"
+                    (click)="addUnit()"
+                    class="text-white hover:bg-blue-500 hover:underline mt-2 cursor-pointer box-border p-2 bg-blue-600 rounded"
+                    >
+                    Add Unit
+                    </button>
                 </div>
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded mt-4">Create Product</button>
+                <button type="submit" 
+                class="bg-green-600 text-white px-4 py-2 rounded mt-4 font-semibold cursor-pointer hover:bg-green-500 hover:underline">Create Product</button>
             </form>
         </div>
         

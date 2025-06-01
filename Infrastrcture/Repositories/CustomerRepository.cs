@@ -1,10 +1,10 @@
 ﻿using Domain.AggregateNodes;
-using Domain.Shared.Interfaces;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Domain.Shared;
 using Infrastructure.DatabaseContexts;
 using Domain.Aggregates.InvoiceAggregate;
+using Application.Interfaces;
 
 namespace Infrastrcture.Repositories
 {

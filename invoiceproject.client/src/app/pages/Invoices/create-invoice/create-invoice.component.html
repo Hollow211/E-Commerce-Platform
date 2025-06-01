@@ -4,29 +4,41 @@
     shadow-[0px_0px_20px_3px_rgba(149,_157,_165,_0.2)] border-secondary border-x-2">
         <div class="flex flex-row justify-between items-center">
             <p class="font-bold font-Roboto text-4xl text-text-primary">Create Invoice</p>
-            <div class="p-3 box-border rounded-sm bg-amber-700">
-                <a class="font-bold font-Roboto text-white" [routerLink]="['/overview', getCurrentId()]">Go to Overview</a>
+            <div class="flex gap-2.5 flex-row-reverse">
+                <div class="p-3 box-border rounded-sm bg-amber-700">
+                    <a class="font-bold font-Roboto text-white" [routerLink]="['/overview', getCurrentId()]">Go to Overview</a>
+                </div>
+                <div class="p-3 box-border rounded-sm bg-amber-700">
+                    <a class="font-bold font-Roboto text-white" [routerLink]="['/create-product']">Create Product</a>
+                </div>
             </div>
         </div>
         <div class="flex flex-row flex-nowrap gap-1.5 h-full">
-            <div class="grid grid-cols-3 grid-rows-2 grid-flow-row gap-4 bg-blue-900 w-full h-auto p-3 box-border rounded-3xl
-                    self-start justify-evenly items-center">
-                @for(item of AvailableProducts; track item){
-                    <div class="rounded-2xl bg-green-400 w-full h-full p-1 box-border shadow-[0px_-2px_6px_7px_rgba(0,_0,_0,_0.3)] items-center justify-center flex flex-col gap-1">
-                        <p class="font-Roboto text-amber-900 font-extrabold text-2xl">{{ item.name }}</p>
-                        <div class="flex flex-row gap-1 justify-center items-center box-border p-1 w-full h-full">
-                            @for(unit of item.units; track unit) {
-                                <div (click)="PickProduct(item,unit)" class="flex flex-col box-border gap-1 items-center rounded-sm p-1 bg-amber-200
-                                border-1 hover: hover:border-amber-50 cursor-pointer select-none">
-                                    <p class="font-Roboto text-cyan-800 font-extrabold text-1xl">{{UnitType[unit.unit.type]}}</p>
-                                    <p class="font-Roboto text-cyan-600 font-extrabold text-1xl">{{unit.unitPrice}}$</p>
-                                </div>
-                            }
-                        </div>   
+                @if (AvailableProducts.length > 0) {
+                    <div class="grid grid-cols-3 grid-rows-2 grid-flow-row gap-4 bg-blue-900 w-full h-auto p-3 box-border rounded-3xl
+                                self-start justify-evenly items-center">
+                                @for(item of AvailableProducts; track item){
+                                    <div class="rounded-2xl bg-green-400 w-full h-full p-1 box-border shadow-[0px_-2px_6px_7px_rgba(0,_0,_0,_0.3)] items-center justify-center flex flex-col gap-1">
+                                        <p class="font-Roboto text-amber-900 font-extrabold text-2xl">{{ item.name }}</p>
+                                        <div class="flex flex-row gap-1 justify-center items-center box-border p-1 w-full h-full">
+                                            @for(unit of item.units; track unit) {
+                                                <div (click)="PickProduct(item,unit)" class="flex flex-col box-border gap-1 items-center rounded-sm p-1 bg-amber-200
+                                                border-1 hover: hover:border-amber-50 cursor-pointer select-none">
+                                                    <p class="font-Roboto text-cyan-800 font-extrabold text-1xl">{{UnitType[unit.unit.type]}}</p>
+                                                    <p class="font-Roboto text-cyan-600 font-extrabold text-1xl">{{unit.unitPrice}}$</p>
+                                                </div>
+                                            }
+                                        </div>   
+                                    </div>
+                                }
+                    </div>
+                } @else {
+                    <div class="flex items-center justify-center bg-blue-900 w-full h-auto p-3 box-border rounded-3xl
+                                self-start">
+                        <p class="font-Roboto font-semibold text-amber-300 text-2xl">Loading Products...</p>
                     </div>
                 }
-            </div>
-            <div class="flex flex-col gap-2 h-full w-6/18 p-3 bg-gray-200 rounded-2xl flex-nowrap">
+            <div class="flex flex-col gap-2 h-auto w-6/18 p-3 bg-gray-200 rounded-2xl flex-nowrap">
                 <p class="font-bold font-Roboto text-2xl text-gray-600">Your basket</p>
                 <div class="flex flex-col flex-nowrap items-center h-full w-full">
                     @for(item of Basket;track item) {

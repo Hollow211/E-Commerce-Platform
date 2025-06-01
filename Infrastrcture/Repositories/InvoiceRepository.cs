@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Domain.AggregateNodes;
 using Domain.Aggregates.InvoiceAggregate;
-using Domain.Shared.Interfaces;
 using Infrastructure.DatabaseContexts;
 using Microsoft.EntityFrameworkCore;
 

@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
+import { CreateProduct } from '../../pages/Products/create-product/create-product.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
   constructor(private http: HttpClient) { }
 
   getAllProducts() {
@@ -37,4 +37,9 @@ export class DataService {
   getAllUnits() {
     return this.http.get('/api/unit/get-all');
   }
+
+  createProduct(product: CreateProduct) {
+    return this.http.post('/api/product/create-product',product);
+  }
+
 }
