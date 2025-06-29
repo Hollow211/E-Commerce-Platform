@@ -21,7 +21,7 @@ public class Invoice : Entity<int>
 
     public static Result<Invoice> CreateInvoice(Customer customer, 
         DateTime issueDate,
-        List<SoldProductPOCO> soldPorductsPoco)
+        List<InvoiceDetailPOCO> soldPorductsPoco)
     {
         // Validation
         if (CheckValidation(customer, issueDate, soldPorductsPoco) == false)
@@ -48,7 +48,7 @@ public class Invoice : Entity<int>
         return Result.Ok(newInvoice);
     }
 
-    private static bool CheckValidation(Customer customer, DateTime issueDate, List<SoldProductPOCO> products)
+    private static bool CheckValidation(Customer customer, DateTime issueDate, List<InvoiceDetailPOCO> products)
     {
         if (customer == null)
             return false;

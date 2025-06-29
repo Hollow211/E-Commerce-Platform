@@ -20,14 +20,14 @@ namespace API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateInvoice(CreateInvoice request)
+        public async Task<IActionResult> CreateInvoice(CreateInvoiceCommand request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);
         }
 
         [HttpPost("pay")]
-        public async Task<IActionResult> PayInvoice(PayInvoice request)
+        public async Task<IActionResult> PayInvoice(UpdatePaymentStatusCommand request)
         {
             var result = await _mediator.Send(request);
             return Ok(result);

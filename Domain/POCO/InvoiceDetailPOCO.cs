@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.POCO
 {
-    public record SoldProductPOCO
+    public record InvoiceDetailPOCO
     {
         public Product Product { get; set; }
 

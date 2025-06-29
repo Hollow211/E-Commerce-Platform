@@ -12,13 +12,13 @@ namespace Application.CQRS.Commands.InvoiceCommands
 
         public bool isSuccess { get; set; }
     }
-    public class CreateInvoice : IRequest<CreateInvoiceResponse>
+    public class CreateInvoiceCommand : IRequest<CreateInvoiceResponse>
     {
         public int CustomerId { get; set; }
         public DateTime InvoiceDate { get; set; }
         public List<SoldProductDTO> Products { get; set; } = new List<SoldProductDTO>();
     }
-    public class AddInvoiceHandler : IRequestHandler<CreateInvoice, CreateInvoiceResponse>
+    public class AddInvoiceHandler : IRequestHandler<CreateInvoiceCommand, CreateInvoiceResponse>
     {
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly ICustomerRepository _customerRepository;
@@ -33,7 +33,7 @@ namespace Application.CQRS.Commands.InvoiceCommands
             _unitRepository = unitRepository;
         }
 
-        public async Task<CreateInvoiceResponse> Handle(CreateInvoice request, CancellationToken cancellationToken)
+        public async Task<CreateInvoiceResponse> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
         {
             // Get Customer
             var Customer = await _customerRepository.GetById(request.CustomerId);
@@ -48,7 +48,7 @@ namespace Application.CQRS.Commands.InvoiceCommands
 
             // Map DTO to POCO
             // SoldProductDTO => SoldProductPOCO
-            var SoldProducts = new List<SoldProductPOCO>();
+            var SoldProducts = new List<InvoiceDetailPOCO>();
             foreach (var entry in request.Products)
             {
                 // Select Product
@@ -58,7 +58,7 @@ namespace Application.CQRS.Commands.InvoiceCommands
                 var unit = Units.FirstOrDefault(u => u.Id == entry.unitId)!;
 
                 // Add to Sold Products
-                var newSoldProduct = new SoldProductPOCO { Product = product, Unit = unit, Quantity = entry.quantity };
+                var newSoldProduct = new InvoiceDetailPOCO { Product = product, Unit = unit, Quantity = entry.quantity };
                 SoldProducts.Add(newSoldProduct);
             }
 
